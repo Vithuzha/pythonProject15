@@ -1,17 +1,15 @@
-from Authendication import check
-from assing import EMPLOYEE
+from Authentication import authenticate
+from HRM import Employee
 
 def main():
-
-    employees = EMPLOYEE.load_and_save_employees()
+    employees = Employee.load_and_save_employees()
     while True:
         username = input("Enter your username: ")
         password = input("Enter your password: ")
 
-
-        if check (username, password):
-            print("Authendication successful.\n")
-            current_user = EMPLOYEE("E789", "Vithuzha", "Software Developer", "Department of Development", "10.09.2020", "currently working")
+        if authenticate(username, password):  # Assuming authenticate function exists
+            print("Authentication successful.\n")
+            current_user = Employee("E789", "Vithuzha", "Software Developer", "Department of Development", "10.09.2020", "currently working")
 
             print("Main Menu:")
             print("A. View Personal Information")
@@ -29,16 +27,16 @@ def main():
 
                 if choice == "A":
                     print("")
-                    print(current_user.__view_emp_info__())
+                    print(current_user.view_emp_info())  # Corrected method call
 
                 elif choice == "B":
                     print("")
-                    current_user.add_employee(employees)
+                    current_user.add_employee(employees)  # Corrected method call
                     current_user.save_employees(employees)
 
                 elif choice == "C":
                     print("")
-                    current_user.remove_employee(employees)
+                    current_user.remove_employee(employees)  # Corrected method call
 
                 elif choice == "D":
                     print("")
@@ -48,24 +46,24 @@ def main():
                     print("")
                     new_position = input("Enter new position: ")
                     new_department = input("Enter new department: ")
-                    update_status = current_user.__update_emp_info__(new_position, new_department)
+                    update_status = current_user.update_emp_info(new_position, new_department)  # Corrected method call
                     print(update_status)
 
                 elif choice == "F":
                     leave_type = input("Enter leave type: ")
-                    duration: str = input("Enter duration: ")
-                    details = input("Enter more details: ")
-                    leave_request = current_user.__submit_leave_request__(leave_type, duration, details)
+                    duration = input("Enter leave duration: ")
+                    details = input("Enter leave details: ")
+                    leave_request = current_user.submit_leave_request(leave_type, duration, details)  # Corrected method call
                     print(leave_request)
                     print("")
                     print("Your request has been submitted successfully.....")
 
                 elif choice == "G":
-                    policies = current_user.__view_company_policies__()
+                    policies = current_user.view_company_policies()  # Corrected method call
                     print(policies)
 
                 elif choice == "H":
-                    schedules = current_user.__access_work_schedules__()
+                    schedules = current_user.access_work_schedules()  # Corrected method call
                     print(schedules)
 
                 elif choice == "I":
@@ -78,10 +76,10 @@ def main():
                         print("")
                         pass
                     else:
-                        print("invalid input. Please try again....")
+                        print("Invalid input. Please try again....")
                 elif choice == "J":
                     while True:
-                        out: str = input("Do you want to exit?(yes / no): ")
+                        out = input("Do you want to exit?(yes / no): ")
                         if out == "no":
                             print("Cancelled....")
                             print("")
@@ -90,13 +88,12 @@ def main():
                             print("Exiting from the session...")
                             exit()
                         else:
-                            print("invalid input. Please try again......")
+                            print("Invalid input. Please try again......")
 
                 else:
                     print("Invalid choice. Please try again.")
         else:
             print("Authentication failed. Please try again.\n")
-
 
 if __name__ == "__main__":
     main()
