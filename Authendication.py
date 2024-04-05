@@ -1,15 +1,9 @@
-def check():
+def check(username, password):
+    with open('Authentication.txt', 'r') as file:
+        valid_username = file.readline().strip()
+        valid_password = file.readline().strip()
 
-    username = input("enter your username:")
-    password = input("enter your password:")
-
-    file=open('Authendication.txt', 'r')#to get the stored username&password from Authendication.txt
-
-    fusername = file.readline()
-    fpassword = file.readline()
-    fusername = fusername.strip()
-
-    if username == fusername and password == fpassword:
-        return True
-    else:
-        return False
+        if username == valid_username and password == valid_password:
+            return True
+        else:
+            return False
