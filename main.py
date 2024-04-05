@@ -1,42 +1,43 @@
-from Authentication import authenticate
-from HRM import Employee
+from Authentication import check
+from hrm import Employee
 
 def main():
-    employees = Employee.load_and_save_employees()
     while True:
         username = input("Enter your username: ")
         password = input("Enter your password: ")
 
-        if authenticate(username, password):  # Assuming authenticate function exists
+        if check(username, password):
             print("Authentication successful.\n")
-            current_user = Employee("E789", "Vithuzha", "Software Developer", "Department of Development", "10.09.2020", "currently working")
+            employees = Employee.load_and_save_employees()
 
-            print("Main Menu:")
-            print("A. View Personal Information")
-            print("B. Add New Employee information")
-            print("C. Remove Employee")
-            print("D. View All Employee Information")
-            print("E. Update Personal Information")
-            print("F. Submit Leave Requests")
-            print("G. View Company Policies")
-            print("H. Access Work Schedules")
-            print("I. Logout")
-            print("J. Exit")
             while True:
-                choice = input("Enter your choice: ")
+                print("Main Menu:")
+                print("A. View Employee Information")
+                print("B. Add New Employee information")
+                print("C. Remove Employee")
+                print("D. View All Employee Information")
+                print("E. Update Personal Information")
+                print("F. Submit Leave Requests")
+                print("G. View Company Policies")
+                print("H. Access Work Schedules")
+                print("I. Logout")
+                print("J. Exit")
+
+                choice = input("Enter your choice: ").upper()
 
                 if choice == "A":
                     print("")
-                    print(current_user.view_emp_info())  # Corrected method call
+                    current_user = Employee("E789", "Vithuzha", "Software Developer", "Department of Development", "10.09.2020", "currently working")
+                    print(current_user.__view_emp_info__())
 
                 elif choice == "B":
                     print("")
-                    current_user.add_employee(employees)  # Corrected method call
+                    current_user.add_employee(employees)
                     current_user.save_employees(employees)
 
                 elif choice == "C":
                     print("")
-                    current_user.remove_employee(employees)  # Corrected method call
+                    current_user.remove_employee(employees)
 
                 elif choice == "D":
                     print("")
@@ -46,40 +47,33 @@ def main():
                     print("")
                     new_position = input("Enter new position: ")
                     new_department = input("Enter new department: ")
-                    update_status = current_user.update_emp_info(new_position, new_department)  # Corrected method call
+                    update_status = current_user.__update_personal_info__(new_position, new_department)
                     print(update_status)
 
                 elif choice == "F":
                     leave_type = input("Enter leave type: ")
-                    duration = input("Enter leave duration: ")
-                    details = input("Enter leave details: ")
-                    leave_request = current_user.submit_leave_request(leave_type, duration, details)  # Corrected method call
+                    duration = input("Enter duration: ")
+                    details = input("Enter more details: ")
+                    leave_request = current_user.__submit_leave_request__(leave_type, duration, details)
                     print(leave_request)
                     print("")
                     print("Your request has been submitted successfully.....")
 
                 elif choice == "G":
-                    policies = current_user.view_company_policies()  # Corrected method call
+                    policies = current_user.__view_company_policies__()
                     print(policies)
 
                 elif choice == "H":
-                    schedules = current_user.access_work_schedules()  # Corrected method call
+                    schedules = current_user.__access_work_schedules__()
                     print(schedules)
 
                 elif choice == "I":
-                    log = input("Do you want to logout ?(yes/no): ")
-                    if log == "yes":
-                        print("Logging out...\n")
-                        break
-                    elif log == "no":
-                        print("Cancelled....")
-                        print("")
-                        pass
-                    else:
-                        print("Invalid input. Please try again....")
+                    print("Logging out...\n")
+                    break
+
                 elif choice == "J":
                     while True:
-                        out = input("Do you want to exit?(yes / no): ")
+                        out = input("Do you want to exit?(yes / no): ").lower()
                         if out == "no":
                             print("Cancelled....")
                             print("")
@@ -92,6 +86,7 @@ def main():
 
                 else:
                     print("Invalid choice. Please try again.")
+
         else:
             print("Authentication failed. Please try again.\n")
 
